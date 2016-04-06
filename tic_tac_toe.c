@@ -38,30 +38,25 @@ int check_win( char board[])  //1 for win, 2 for tie, 0 otherwise
 }
 int mini(char board[])
 {
-    char temp_board[9];
-    for(int i=0; i<9; i++)
-        temp_board[i]=board[i];
     int score[9],ctr=0;
     for(int j=0; j<9; j++)
     {
         if(board[j]=='0')
         {
-            temp_board[j]='2';
-            if(check_win(temp_board)==1)
+            board[j]='2';
+            if(check_win(board)==1)
             {
                 score[ctr++]=-10;
-                continue;
             }
-            else if(check_win(temp_board)==2)
+            else if(check_win(board)==2)
             {
                 score[ctr++]=0;
-                continue;
             }
             else
             {
-                score[ctr++]=max(temp_board);
+                score[ctr++]=max(board);
             }
-            temp_board[j]='0';
+            board[j]='0';
         }
     }
     int min_score=score[0];
@@ -74,30 +69,26 @@ int mini(char board[])
 }
 int max(char board[])
 {
-    char temp_board[9];
-    for(int i=0; i<9; i++)
-        temp_board[i]=board[i];
+
     int score[9],ctr=0;
     for(int j=0; j<9; j++)
     {
         if(board[j]=='0')
         {
-            temp_board[j]='1';
-            if(check_win(temp_board)==1)
+            board[j]='1';
+            if(check_win(board)==1)
             {
                 score[ctr++]=10;
-                continue;
             }
-            else if(check_win(temp_board)==2)
+            else if(check_win(board)==2)
             {
                 score[ctr++]=0;
-                continue;
             }
             else
             {
-                score[ctr++]=mini(temp_board);
+                score[ctr++]=mini(board);
             }
-            temp_board[j]='0';
+            board[j]='0';
         }
     }
     int max_score=score[0];
@@ -118,28 +109,24 @@ void update_board(int move, char choice)
 void play_server(char board[])
 {
     int min_score=10, move, temp=10;
-    char temp_board[9];
-    for(int i=0; i<9; i++)
-        temp_board[i]=board[i];
+
     for(int j=0; j<9; j++)
     {
         if(board[j]=='0')
         {
-            temp_board[j]='2';
-            temp=max(temp_board);
+            board[j]='2';
+            temp=max(board);
             if(temp<=min_score)
             {
                 move=j+1;
                 min_score=temp;
             }
 
-            temp_board[j]='0';
+            board[j]='0';
         }
     }
     update_board(move, 's');
 }
-
-
 
 int main()
 {
